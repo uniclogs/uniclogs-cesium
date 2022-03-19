@@ -1,22 +1,23 @@
 {
-  "name": "cesiumjs-webpack-example",
+  "name": "uniclogs-cesium",
   "version": "1.0.0",
-  "description": "The minimal recomended setup for an app using Cesium with Webpack.",
-  "homepage": "https://cesium.com/platform/cesiumjs/",
+  "description": "Cesium-based app to show where OreSat is.",
+  "homepage": "https://www.oresat.org",
   "license": "Apache-2.0",
   "author": {
-    "name": "Cesium GS, Inc.",
-    "url": "https://cesium.com"
+    "name": "PSAS",
+    "url": "https://pdxaerospace.org"
   },
   "keywords": [
     "cesium",
     "CesiumJS",
     "webpack",
-    "example"
+    "example",
+    "oresat"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CesiumGS/cesium-webpack-example.git"
+    "url": "https://github.com/oresat/uniclogs-cesium.git"
   },
   "main": "index.js",
   "scripts": {

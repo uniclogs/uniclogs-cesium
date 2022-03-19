@@ -14,15 +14,15 @@ Cesium-based app to show where OreSat0 is.
 
 ## Run Data REST API
 
-- Install dependencies: `$ pip install -r api/requirements.txt`
-- Run: `$ python -m api`
+- Install dependencies: `$ pip install -r app/requirements.txt`
+- Run: `$ flask run`
 
 ## Run Cesium App
 
 - Install `npm` for your system
 - Install dependencies: `$ npm update`
 - Run: `$ npm start`
-- Goto `$ localhost:8080`
+- Goto `localhost:8080` in a web browser
 
 [GDAL]:https://gdal.org
 [GDAL Download]:https://gdal.org/download.html
