@@ -1,6 +1,6 @@
 # Uniclogs Cesium
 
-Cesium-based app to show where OreSat0 currently is.
+[CesiumJS]-based web app to show where OreSats are.
 
 ## Backend
 
@@ -20,3 +20,4 @@ Cesium-based app to show where OreSat0 currently is.
 
 [GDAL]:https://gdal.org
 [GDAL Download]:https://gdal.org/download.html
+[CesiumJS]:https://github.com/CesiumGS/cesium
