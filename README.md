@@ -16,7 +16,7 @@ Cesium-based app to show where OreSat0 currently is.
 - Install `yarn` for your system
 - Install dependencies: `$ yarn install`
 - Run: `$ yarn dev`
-- Goto `localhost:9000` in a web browser
+- Goto `localhost:3000` in a web browser
 
 [GDAL]:https://gdal.org
 [GDAL Download]:https://gdal.org/download.html
