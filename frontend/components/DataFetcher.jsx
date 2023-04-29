@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useCesium } from 'resium';
 import { CzmlDataSource, Cartesian3 } from 'cesium';
 
-function DataFetcher({restApi}) {
+function DataFetcher({ restApi }) {
   const cesium = useCesium();
 
   function fetchCzml() {

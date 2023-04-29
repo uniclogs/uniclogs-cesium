@@ -6,7 +6,7 @@ module.exports = {
     config.plugins.push(
       new webpack.DefinePlugin({
         CESIUM_BASE_URL: JSON.stringify('cesium'),
-        BACKEND_PORT: JSON.stringify(process.env.BACKEND_PORT),
+        REST_API: JSON.stringify(process.env.REST_API),
       }),
     );
     return config;

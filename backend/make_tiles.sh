@@ -4,7 +4,7 @@ URL=https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74218/world.200412.
 
 mkdir -p data
 
-#wget $URL -O data/world.png
+wget $URL -O data/world.png
 
 gdal_translate -of GTiff -a_srs EPSG:4326 -a_ullr -180 90 180 -90 data/world.png data/world.tif
 

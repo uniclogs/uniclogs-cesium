@@ -10,7 +10,7 @@ COPY components /components/
 COPY pages /pages/
 COPY public /public/
 
-ENV BACKEND_PORT=9000
+ENV REST_API=https://mission.oresat.org/data
 
 RUN yarn build
 

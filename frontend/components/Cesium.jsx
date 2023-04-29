@@ -5,8 +5,7 @@ import {
 } from 'cesium';
 import DataFetcher from './DataFetcher';
 
-const backendPort = BACKEND_PORT || '5000';
-const restApi = `http://${window.location.hostname}:${backendPort}`;
+const restApi = REST_API || `http://${window.location.hostname}:5000`;
 
 // replace the Cesium Ion logo with just a Cesium logo
 // this is not using Cesium Ion, only CesiumJS
