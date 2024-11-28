@@ -19,6 +19,15 @@ function DataFetcher({ restApi }) {
   useEffect(() => {
     cesium.viewer.scene.globe.enableLighting = true;
 
+    // override home
+    cesium.viewer.homeButton.viewModel.command.beforeExecute.addEventListener(
+      function(e) {
+        e.cancel = true;
+        cesium.viewer.camera.flyTo({
+          destination: Cartesian3.fromDegrees(-122.676483, 45.523064, 25000000.0)
+        });
+    });
+
     // replace the Cesium Ion logo with just a Cesium logo
     // this is not using Cesium Ion, only CesiumJS
     cesium.viewer.scene.frameState.creditDisplay._cesiumCreditContainer.innerHTML = '<a href="https://cesium.com/" target="_blank"><img src="cesium/Assets/Images/cesium_credit.png" title="Cesium"/></a>';
