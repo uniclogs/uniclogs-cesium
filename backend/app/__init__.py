@@ -22,8 +22,8 @@ class SatelliteInfo:
 
 
 SATS = [
-    # SatelliteInfo("ORESAT0", 52017, "2022-026"),
-    SatelliteInfo("ORESAT0.5", 60525, "2024-149"),
+    # SatelliteInfo("OreSat0", 52017, "2022-026"),
+    SatelliteInfo("OreSat0.5", 60525, "2024-149"),
 ]
 
 dt = datetime.utcnow()
@@ -53,12 +53,18 @@ def get_czml():
 
     act_sats_tles = fetch_tles(ACTIVAE_SAT_URL)
     for sat in SATS:
+        tle = ""
+
         if sat.norad_catalog_number in act_sats_tles:
-            tle_list.append(act_sats_tles[sat.norad_catalog_number])
+            tle = act_sats_tles[sat.norad_catalog_number]
         else:
             intdes_tles = fetch_tles(INTDES_URL_BASE + sat.international_designator)
             if sat.norad_catalog_number in intdes_tles:
-                tle_list.append(intdes_tles[sat.norad_catalog_number])
+                tle = intdes_tles[sat.norad_catalog_number]
+
+        if tle != "":
+            tle[0] = sat.name
+            tle_list.append(tle)
 
     global dt
     dt = datetime.utcnow()
