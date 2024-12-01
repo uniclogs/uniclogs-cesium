@@ -10,8 +10,9 @@ COPY components /components/
 COPY pages /pages/
 COPY public /public/
 
-ENV REST_API=https://mission.oresat.org/data
+#ENV REST_API=https://mission.oresat.org/data
+#ENV REST_API=https://localhost:9000/data
 
-RUN yarn build
+#RUN yarn build
 
-CMD ["yarn","start"]
+CMD ["yarn","dev"]

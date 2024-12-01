@@ -1,7 +1,7 @@
 flask
 flask-cors
 gunicorn
-pygeoif==0.7
-python-dateutil
 requests
 satellite-czml
+skyfield
+dataclasses-json

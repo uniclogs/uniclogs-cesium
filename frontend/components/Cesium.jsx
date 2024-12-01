@@ -4,6 +4,8 @@ import {
   UrlTemplateImageryProvider, GeographicTilingScheme, ClockStep, Credit, Cartesian3,
 } from 'cesium';
 import DataFetcher from './DataFetcher';
+import Overlay from './Overlay';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const restApi = REST_API || `http://${window.location.hostname}:5000`;
 
@@ -23,13 +25,13 @@ function Cesium() {
       baseLayerPicker={false} // uses Cesium Ion
       geocoder={false} // uses Cesium Ion
       imageryProvider={imageryProvider}
-      timeline={false}
       credit={new Credit(cesiumCredit)}
       full
     >
       <CameraFlyTo destination={Cartesian3.fromDegrees(-122.676483, 45.523064, 25000000.0)} />
       <Clock clockStep={ClockStep.SYSTEM_CLOCK} />
       <DataFetcher restApi={restApi} />
+      <Overlay restApi={restApi} />
     </Viewer>
   );
 }

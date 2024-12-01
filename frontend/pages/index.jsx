@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import React from 'react';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Cesium = dynamic(
   () => import('../components/Cesium'),
