@@ -14,7 +14,7 @@ INTDES_URL_BASE = "https://celestrak.org/NORAD/elements/gp.php?INTDES="
 # pass settings
 DAYS = 7
 MIN_DURATION_S = 300
-MIN_CUL_EL = 0
+MIN_CUL_EL = 10
 
 
 @dataclass_json

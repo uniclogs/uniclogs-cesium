@@ -91,6 +91,10 @@ function UpcommingPassesModal({ show, handleClose, restApi }) {
     return () => clearInterval(interval);
   });
 
+  function getTzStr(date) {
+    return date.toString().match(/\(([A-Za-z\s].*)\)/)[1];
+  }
+
   return (
     <Modal show={show} onHide={handleClose} data-bs-theme="dark" color="white" size="xl" centered scrollable>
       <Modal.Header closeButton>
@@ -116,8 +120,8 @@ function UpcommingPassesModal({ show, handleClose, restApi }) {
           <thead>
             <tr>
               <td>#</td>
-              <td>AOS</td>
-              <td>LOS</td>
+              <td>AOS ({getTzStr(DEFAULT_DATE)})</td>
+              <td>LOS ({getTzStr(DEFAULT_DATE)})</td>
               <td>Duration</td>
               <td>Max El</td>
               <td>AOS Az</td>
