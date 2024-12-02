@@ -1,6 +1,8 @@
 import json
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
+from threading import Thread
+from time import sleep
 
 import requests
 from dataclasses_json import config, dataclass_json
@@ -10,6 +12,8 @@ from skyfield.api import EarthSatellite, Loader, Topos, wgs84
 
 ACTIVAE_SAT_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=tle"
 INTDES_URL_BASE = "https://celestrak.org/NORAD/elements/gp.php?INTDES="
+
+UPDATE_HOURS = 12
 
 # pass settings
 DAYS = 7
@@ -70,9 +74,16 @@ class Data:
         self.czml: str = ""
         self.passes: dict[GroundStation, list[OrbitalPass]] = {}
 
-        self._update_tles()
-        self._update_czml()
-        self._update_passes()
+        self.thread = Thread(target=self._update, daemon=True)
+        self.thread.start()
+
+    def _update(self):
+
+        while True:
+            self._update_tles()
+            self._update_czml()
+            self._update_passes()
+            sleep(UPDATE_HOURS * 60 * 60)
 
     def _update_tles(self):
 
