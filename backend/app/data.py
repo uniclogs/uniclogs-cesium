@@ -127,11 +127,18 @@ class Data:
 
 def fetch_tles(url: str) -> dict[int, list[str]]:
     """Fetch the TLEs from URL"""
-    response = requests.get(url)
+    tles: dict[int, list[str]] = {}
+    try:
+        response = requests.get(url)
+    except Exception:
+        return tles
+
+    if response.status_code != 200:
+        return tles
+
     lines_raw = response.content.decode().split("\n")
     lines = [i.strip() for i in lines_raw]
     lines = lines[:-1]  # remove trailing empty line
-    tles = {}
     for i in range(0, len(lines), 3):
         cat_num = int(lines[i + 1][1:7])
         tles[cat_num] = lines[i : i + 3]
