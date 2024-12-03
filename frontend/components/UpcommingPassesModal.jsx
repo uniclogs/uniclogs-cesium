@@ -20,7 +20,14 @@ function UpcommingPassesModal({ show, handleClose, restApi }) {
   const [gs, setGs] = useState('UniClOGS EB');
   const [sat, setSat] = useState('OreSat0.5');
   const [passes, setPasses] = useState(PASSES_DEFAULT);
-  const [nextPassIndex, setNextPassIndex] = useState(0);
+
+  useEffect(() => {
+    fetch(`${restApi}/passes/${gs}/${sat}`)
+      .then(response => response.json())
+      .then(data => {
+        setPasses(data);
+      });
+  }, []);
 
   function timeDiff(date1, date2) {
     let diffTime = 0;
@@ -47,10 +54,15 @@ function UpcommingPassesModal({ show, handleClose, restApi }) {
     return timeDiff(strToDate(date1), strToDate(date2));
   }
 
+  function getTzStr(date) {
+    return date.toString().match(/\(([A-Za-z\s].*)\)/)[1];
+  }
+
   function makeRows() {
+    const nextPassIndex = getNextPassIndex();
     const upcommingPasses = passes.slice(nextPassIndex, passes.length);
     return upcommingPasses.map((pass, index) => (
-      <tr key={`ass${index}`}>
+      <tr key={`pass${index}`}>
         <td>{index + 1}</td>
         <td>{utcStrToLocalDate(pass.aos_utc).toLocaleString()}</td>
         <td>{utcStrToLocalDate(pass.los_utc).toLocaleString()}</td>
@@ -62,15 +74,7 @@ function UpcommingPassesModal({ show, handleClose, restApi }) {
     ));
   }
 
-  useEffect(() => {
-    fetch(`${restApi}/passes/${gs}/${sat}`)
-      .then(response => response.json())
-      .then(data => {
-        setPasses(data);
-      });
-  }, []);
-
-  function updateNextPassIndex() {
+  function getNextPassIndex() {
     const curDate = JulianDate.toDate(cesium.viewer.clock.currentTime);
     const curDateUtc = new Date(curDate.toUTCString().slice(0, -4));
     let newIndex = 0;
@@ -80,19 +84,7 @@ function UpcommingPassesModal({ show, handleClose, restApi }) {
         break;
       }
     }
-    setNextPassIndex(newIndex);
-  }
-
-  useEffect(() => {
-    updateNextPassIndex();
-    const interval = setInterval(() => {
-      updateNextPassIndex();
-    }, 250); // ms
-    return () => clearInterval(interval);
-  });
-
-  function getTzStr(date) {
-    return date.toString().match(/\(([A-Za-z\s].*)\)/)[1];
+    return newIndex;
   }
 
   return (
@@ -109,7 +101,7 @@ function UpcommingPassesModal({ show, handleClose, restApi }) {
             </select>
           </div>
           <div style={{ width: '50%', display: 'inline-block', textAlign: 'center' }}>
-            <label htmlFor="gs" style={{ color: 'white' }}>Satellite:&nbsp;</label>
+            <label htmlFor="sat" style={{ color: 'white' }}>Satellite:&nbsp;</label>
             <select name="sat" id="sat" onChange={e => setSat(e.targe.value)}>
               <option id="OreSat0.5">OreSat0.5</option>
             </select>

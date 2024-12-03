@@ -1,6 +1,6 @@
 FROM python:3.10-alpine
 
-EXPOSE 9000
+EXPOSE 5000
 
 COPY requirements.txt /
 RUN pip install -r requirements.txt
@@ -11,4 +11,4 @@ ENV FLASK_APP=/app
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_DEBUG=0
 
-CMD ["gunicorn", "-b", "0.0.0.0:9000", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]

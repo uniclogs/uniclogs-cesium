@@ -64,4 +64,4 @@ def get_passes(gs: str, sat: str):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
