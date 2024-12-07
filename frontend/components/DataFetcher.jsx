@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useCesium } from 'resium';
 import { CzmlDataSource, Cartesian3 } from 'cesium';
+import { BACKEND_REST_API, CESIUM_CREDIT, HOME_LAT_DEG, HOME_LONG_DEG, HOME_ALT_M } from './Constants';
 
-function DataFetcher({ restApi }) {
+function DataFetcher() {
   const cesium = useCesium();
 
   function fetchCzml() {
-    fetch(`${restApi}/czml`)
+    fetch(`${BACKEND_REST_API}/czml`)
       .then(response => response.json())
       .then(data => {
         if (cesium.viewer.dataSources !== undefined) {
@@ -24,19 +25,19 @@ function DataFetcher({ restApi }) {
       (e) => {
         e.cancel = true;
         cesium.viewer.camera.flyTo({
-          destination: Cartesian3.fromDegrees(-122.676483, 45.523064, 25000000.0),
+          destination: Cartesian3.fromDegrees(HOME_LONG_DEG, HOME_LAT_DEG, HOME_ALT_M),
         });
       },
     );
 
     // replace the Cesium Ion logo with just a Cesium logo
     // this is not using Cesium Ion, only CesiumJS
-    cesium.viewer.scene.frameState.creditDisplay._cesiumCreditContainer.innerHTML = '<a href="https://cesium.com/" target="_blank"><img src="cesium/Assets/Images/cesium_credit.png" title="Cesium"/></a>';
+    cesium.viewer.scene.frameState.creditDisplay._cesiumCreditContainer.innerHTML = CESIUM_CREDIT;
 
     cesium.viewer.entities.add({
       name: 'PSAS',
       description: '<p>Portland State Aerospace Society</p>',
-      position: Cartesian3.fromDegrees(-122.676483, 45.523064),
+      position: Cartesian3.fromDegrees(HOME_LONG_DEG, HOME_LAT_DEG),
       billboard: {
         image: '/psas_logo.png',
         scale: 0.2,

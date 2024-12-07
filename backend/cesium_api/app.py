@@ -30,7 +30,6 @@ class App(Flask):
         self.debug = debug
 
         # Register app views
-        end = f"{api_prefix}/czml"
         self.register_blueprint(view_czml, url_prefix=f"{api_prefix}/czml")
         self.register_blueprint(view_groundstation, url_prefix=f"{api_prefix}/gs")
         self.register_blueprint(view_passes, url_prefix=f"{api_prefix}/passes")

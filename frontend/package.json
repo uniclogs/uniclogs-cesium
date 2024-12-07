@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "bootstrap": "5.3.3",
-    "cesium": "1.100.0",
+    "cesium": "1.116.0",
     "next": "15.0.3",
     "prop-types": "^15.8.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-bootstrap": "2.10.6",
-    "resium": "^1.16.0"
+    "resium": "^1.17.3"
   },
   "devDependencies": {
     "eslint": "^9.16.0",

@@ -3,6 +3,7 @@ import { useCesium } from 'resium';
 import { JulianDate } from 'cesium';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
+import { BACKEND_REST_API } from './Constants';
 
 const DEFAULT_DATE = new Date();
 const PASSES_DEFAULT = [{
@@ -14,7 +15,7 @@ const PASSES_DEFAULT = [{
   los_az: 0.0,
 }];
 
-function UpcommingPassesModal({ show, handleClose, restApi }) {
+function UpcommingPassesModal({ show, handleClose }) {
   const cesium = useCesium();
 
   const [gs, setGs] = useState('UniClOGS EB');
@@ -22,7 +23,7 @@ function UpcommingPassesModal({ show, handleClose, restApi }) {
   const [passes, setPasses] = useState(PASSES_DEFAULT);
 
   useEffect(() => {
-    fetch(`${restApi}/passes/${gs}/${sat}`)
+    fetch(`${BACKEND_REST_API}/passes/${gs}/${sat}`)
       .then(response => response.json())
       .then(data => {
         setPasses(data);
