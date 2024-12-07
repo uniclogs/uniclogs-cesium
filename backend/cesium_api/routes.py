@@ -1,28 +1,3 @@
-import json
-import os
-
-from flask import Flask, send_file
-from flask_cors import CORS
-
-from .data import Data, GroundStation, Satellite
-
-DATA_DIR = os.getenv("DATA_DIR", "../data")
-
-app = Flask(__name__)
-CORS(app)
-
-SATELLITES = [
-    # Satellite("OreSat0", 52017, "2022-026"),
-    Satellite("OreSat0.5", 60525, "2024-149"),
-]
-
-GROUND_STATIONS = [
-    GroundStation("UniClOGS EB", 45.509054, -122.681394, 50, 0),
-]
-
-data = Data(SATELLITES, GROUND_STATIONS)
-
-
 @app.route("/czml")
 def get_czml():
     return data.czml
@@ -61,7 +36,3 @@ def get_passes(gs: str, sat: str):
     except Exception:
         pass
     return passes
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

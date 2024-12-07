@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cesium-api"
+description = "A supporting API for the CesiumJS App"
+version = "1.0.1"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "GPL-2.0" }
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "dataclasses-json",
+    "flask",
+    "flask-cors",
+    "gunicorn",
+    "pygeoif==0.7",
+    "python-dateutil",
+    "requests",
+    "satellite-czml",
+    "skyfield",
+]
+
+[project.scripts]
+cesium-api = "cesium_api.__main__:main"
+
+[tool.setuptools.packages.find]
+exclude = ["docs*", "tests*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml", "*.csv"]
+
+[tool.black]
+line_length = 100
+
+[tool.pylama]
+format = "pylint"
+skip = "*/.tox/*,*/.env/,*/.git/*,*/.github/*,*/build/*,.direnv/*"
+linters = "pycodestyle,pyflakes,pylint,mccabe,mypy,radon"
+
+[[tool.pylama.files]]
+path = "*/__init__.py"
+# W0611:    Imported but unused
+# R0903:    Too few public methods
+ignore = "W0611,R0903"
+
+[tool.isort]
+profile = "black"
+line_length = 100
