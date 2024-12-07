@@ -46,6 +46,15 @@ def parse_args() -> Namespace:
         default=DEFAULT_DATA_DIR,
         help="Data directory with all of the generated globe tiles. (default: %(default)s)",
     )
+    parser.add_argument(
+        "--prefix",
+        "-p",
+        dest="api_prefix",
+        type=str,
+        default="/",
+        metavar="API Prefix",
+        help="API Prefix to append to all endpoints. (default: %(default)s)",
+    )
     return parser.parse_args()
 
 
@@ -56,9 +65,12 @@ def main():
         print(f"{APP_NAME} v{APP_VERSION}: {APP_DESCRIPTION}")
         return
 
+    api_prefix = args.api_prefix[:-1] if args.api_prefix.endswith("/") else args.api_prefix
+
     app = App(
         host=args.host,
         port=args.port,
+        api_prefix=api_prefix,
         data_dir=args.data_dir,
         data=Data(SATELLITES, GROUND_STATIONS),
         debug=args.debug,
