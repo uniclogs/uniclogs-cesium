@@ -1,14 +1,26 @@
 FROM python:3.10-alpine
 
-EXPOSE 5000
+ARG VERSION
 
-COPY requirements.txt /
-RUN pip install -r requirements.txt
+ARG API_HOST
+ENV API_HOST=0.0.0.0
 
-COPY app /app/
+ARG API_PORT
+ENV API_PORT=9000
 
-ENV FLASK_APP=/app
-ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_DEBUG=0
+ARG DATA_DIR
+ENV DATA_DIR=/var/cesium-api/
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+ARG API_PREFIX
+ENV API_PREFIX=/
+
+ARG WHL_NAME
+ENV WHL_NAME=cesium_api-${VERSION}-py3-none-any.whl
+
+COPY build/${WHL_NAME} /
+RUN pip install /${WHL_NAME}
+RUN rm /${WHL_NAME}
+
+EXPOSE ${API_PORT}
+
+CMD cesium-api --host ${API_HOST} --port ${API_PORT} --data-dir ${DATA_DIR} --prefix ${API_PREFIX}
