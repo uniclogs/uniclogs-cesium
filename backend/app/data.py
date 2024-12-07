@@ -62,10 +62,7 @@ class OrbitalPass:
 
 
 class Data:
-
-    def __init__(
-        self, satellites: list[Satellite], groundstations: list[GroundStation]
-    ):
+    def __init__(self, satellites: list[Satellite], groundstations: list[GroundStation]):
         self.satellites = satellites
         self.groundstations = groundstations
 
@@ -78,7 +75,6 @@ class Data:
         self.thread.start()
 
     def _update(self):
-
         while True:
             self._update_tles()
             self._update_czml()
@@ -86,7 +82,6 @@ class Data:
             sleep(UPDATE_HOURS * 60 * 60)
 
     def _update_tles(self):
-
         tles = []
         act_sats_tles = fetch_tles(ACTIVAE_SAT_URL)
         for sat in self.satellites:
@@ -152,7 +147,6 @@ def get_all_passes(
     days: int,
     min_duration_s: int = 0,
 ) -> list[OrbitalPass]:
-
     load = Loader("/tmp", verbose=False)
     ts = load.timescale()
     t0 = ts.utc(start_datetime.replace(tzinfo=timezone.utc))
@@ -185,7 +179,10 @@ def get_all_passes(
         elif e == 2:  # LOS
             los = te
             los_i = i
-            passes.append([aos, cul, los, aos_i, cul_i, los_i])
+            try:
+                passes.append([aos, cul, los, aos_i, cul_i, los_i])
+            except Exception:
+                pass  # don't add partial passes
         i += 1
 
     pass_list = []
