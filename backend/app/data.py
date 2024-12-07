@@ -19,6 +19,7 @@ UPDATE_HOURS = 12
 DAYS = 7
 MIN_DURATION_S = 300
 MIN_CUL_EL = 10
+PASS_RGBA = [255, 0, 0, 255]
 
 
 @dataclass_json
@@ -77,8 +78,8 @@ class Data:
     def _update(self):
         while True:
             self._update_tles()
-            self._update_czml()
             self._update_passes()
+            self._update_czml()
             sleep(UPDATE_HOURS * 60 * 60)
 
     def _update_tles(self):
@@ -107,9 +108,31 @@ class Data:
             speed_multiplier=1,
         ).get_czml()
 
-        # fix clock to be real time
         czml_json = json.loads(czml_raw)
+
+        for gs in self.groundstations:
+            for sat in self.satellites:
+                i = 0
+                for pass_x in self.passes[gs.name][sat.name]:
+                    czml0_raw = satellite_czml(
+                        tle_list=self.tles,
+                        start_time=pass_x.aos_utc,
+                        end_time=pass_x.los_utc,
+                        speed_multiplier=1,
+                    ).get_czml()
+                    czml0_json = json.loads(czml0_raw)
+                    pass_x_czml = czml0_json[1]
+                    pass_x_czml["billboard"] = {"show": False}
+                    pass_x_czml["label"] = {"show": False}
+                    pass_x_czml["id"] = f"{gs.name}_{sat.name}_{i}"
+                    pass_x_czml["path"]["material"]["solidColor"]["color"]["rgba"] = PASS_RGBA
+                    pass_x_czml["path"]["width"] = 4.0
+                    czml_json.append(pass_x_czml)
+                    i += 1
+
+        # fix clock to be real time
         czml_json[0]["clock"]["step"] = "SYSTEM_CLOCK"
+
         self.czml = json.dumps(czml_json)
 
     def _update_passes(self):
