@@ -63,14 +63,6 @@ class OrbitalPass:
 
 
 class Data:
-    _instance = None
-
-    @staticmethod
-    def get_instance(*args, **kwargs) -> Data:
-        if _instance is None:
-            _instance = Data(*args, **kwargs)
-        return _instance
-
     def __init__(self, satellites: list[Satellite], groundstations: list[GroundStation]):
         self.satellites = satellites
         self.groundstations = groundstations
