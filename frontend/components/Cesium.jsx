@@ -1,20 +1,17 @@
 import React, { memo } from 'react';
 import { Viewer, Clock, CameraFlyTo } from 'resium';
 import {
-  UrlTemplateImageryProvider, GeographicTilingScheme, ClockStep, Credit, Cartesian3,
+  UrlTemplateImageryProvider, GeographicTilingScheme, ClockStep, Credit, Cartesian3, ImageryLayer,
 } from 'cesium';
 import DataFetcher from './DataFetcher';
 import Overlay from './Overlay';
+import {
+  BACKEND_REST_API, CESIUM_CREDIT, HOME_LONG_DEG, HOME_LAT_DEG, HOME_ALT_M,
+} from './Constants';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const restApi = REST_API || `http://${window.location.hostname}:5000`;
-
-// replace the Cesium Ion logo with just a Cesium logo
-// this is not using Cesium Ion, only CesiumJS
-const cesiumCredit = '<a href="https://cesium.com/" target="_blank"><img src="/images/cesium_logo.png" title="Cesium"/></a>';
-
 const imageryProvider = new UrlTemplateImageryProvider({
-  url: restApi + '/tiles/{z}/{x}/{reverseY}.png',
+  url: BACKEND_REST_API + '/tiles/{z}/{x}/{reverseY}.png',
   tilingScheme: new GeographicTilingScheme(),
   maximumLevel: 5,
 });
@@ -24,14 +21,14 @@ function Cesium() {
     <Viewer
       baseLayerPicker={false} // uses Cesium Ion
       geocoder={false} // uses Cesium Ion
-      imageryProvider={imageryProvider}
-      credit={new Credit(cesiumCredit)}
+      baseLayer={new ImageryLayer(imageryProvider)}
+      credit={new Credit(CESIUM_CREDIT)}
       full
     >
-      <CameraFlyTo destination={Cartesian3.fromDegrees(-122.676483, 45.523064, 25000000.0)} />
+      <CameraFlyTo destination={Cartesian3.fromDegrees(HOME_LONG_DEG, HOME_LAT_DEG, HOME_ALT_M)} />
       <Clock clockStep={ClockStep.SYSTEM_CLOCK} />
-      <DataFetcher restApi={restApi} />
-      <Overlay restApi={restApi} />
+      <DataFetcher />
+      <Overlay />
     </Viewer>
   );
 }
