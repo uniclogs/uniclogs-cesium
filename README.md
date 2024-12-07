@@ -9,33 +9,35 @@ Install [GDAL] for your system. See [GDAL Download].
 Install python gdal wrapper
 
 ```bash
-$ pip install gdal
+pip install gdal
 ```
 
 Change to backend directory
 
 ```bash
-$ cd backend
+cd backend
 ```
 
 Make the tiles for the CesiumJS model
 
 ```bash
-$ ./make_tiles.sh
+./make_tiles.sh
 ```
+
 ## Run with Docker
 
 Build docker containers
 
 ```bash
-$ docker-compose build
+docker-compose build
 ```
 
 Start docker containers
 
 ```bash
-$ docker-compose up
+docker-compose up
 ```
+
 Goto `localhost:9005` in a web browser
 
 ## Run without Docker
@@ -43,20 +45,21 @@ Goto `localhost:9005` in a web browser
 ### Backend
 
 Change to backend directory
-```
-$ cd backend
+
+```bash
+cd backend
 ```
 
 Install Python dependencies
 
 ```bash
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 Start the app
 
 ```bash
-$ ./run.py
+./run.py
 ```
 
 ### Frontend
@@ -64,24 +67,25 @@ $ ./run.py
 Change to frontend directory
 
 ```bash
-$ cd frontend
+cd frontend
 ```
+
 Install `nodejs` and `yarn` for your system
 
 ```bash
-$ sudo apt install nodejs yarnpkg
+sudo apt install nodejs yarnpkg
 ```
 
 Install JavaScript dependencies
 
 ```bash
-$ yarn install
+yarn install
 ```
 
 Start the app
 
 ```bash
-$ yarn dev
+yarn dev
 ```
 
 Goto `localhost3000` in a web browser
