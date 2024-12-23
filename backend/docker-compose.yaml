@@ -1,0 +1,11 @@
+services:
+  cesium-api:
+    build:
+      context: .
+    ports:
+      - '9000:9000'
+    volumes:
+      - globe_data:/var/cesium-api/
+
+volumes:
+  globe_data:

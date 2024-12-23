@@ -1,13 +1,14 @@
-import json
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
-from threading import Thread
-from time import sleep
+from __future__ import annotations
 
+import json
 import requests
-from dataclasses_json import config, dataclass_json
+from time import sleep
+from threading import Thread
 from marshmallow import fields
+from dataclasses import dataclass, field
 from satellite_czml import satellite_czml
+from datetime import datetime, timedelta, timezone
+from dataclasses_json import config, dataclass_json
 from skyfield.api import EarthSatellite, Loader, Topos, wgs84
 
 ACTIVAE_SAT_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=tle"
