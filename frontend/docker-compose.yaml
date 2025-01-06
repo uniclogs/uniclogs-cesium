@@ -1,7 +1,7 @@
 services:
-  frontend:
+  cesium-web-app:
     build:
-      context: ./frontend
+      context: .
       dockerfile: Dockerfile
       args:
         - REST_API=http://localhost:9000
