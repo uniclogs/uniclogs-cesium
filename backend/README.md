@@ -1,4 +1,4 @@
-# Cesium API
+# Cesium Backend API
 
 A supplimentary API for the CesiumJS App
 

@@ -1,19 +1,33 @@
-FROM node:lts-alpine
+FROM node:lts-alpine3.21
 
 ARG REST_API
-EXPOSE 3000
+ENV REST_API="https://cesium-api.uniclogs.org"
 
-COPY next.config.js /next.config.js
-COPY package.json /package.json
-COPY yarn.lock /yarn.lock
+ARG APP_HOST
+ENV APP_HOST="mission.uniclogs.org"
+
+ARG APP_PORT
+ENV APP_PORT=3000
+
+ARG APP_DIR
+ENV APP_DIR="/srv/cesium"
+
+RUN adduser -h ${APP_DIR} -D cesium users
+COPY --chown=cesium:users --chmod=600 next.config.js ${APP_DIR}
+COPY --chown=cesium:users --chmod=600 package.json ${APP_DIR}
+COPY --chown=cesium:users --chmod=600 yarn.lock ${APP_DIR}
+
+USER cesium
+WORKDIR ${APP_DIR}
 
 RUN yarn install
 
-COPY components /components/
-COPY pages /pages/
-COPY public /public/
+COPY --chown=cesium:users --chmod=700 components ${APP_DIR}/components
+COPY --chown=cesium:users --chmod=700 pages ${APP_DIR}/pages
+COPY --chown=cesium:users --chmod=700 public ${APP_DIR}/public
 
-ENV REST_API=$REST_API
 RUN yarn build
 
-CMD ["yarn","start"]
+EXPOSE ${APP_PORT}
+
+CMD yarn start -p ${APP_PORT}

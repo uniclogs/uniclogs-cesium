@@ -1,5 +1,6 @@
 services:
   cesium-api:
+    image: cesium-api:latest
     build:
       context: .
     ports:

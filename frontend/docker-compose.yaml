@@ -1,0 +1,7 @@
+services:
+  cesium-web-app:
+    image: cesium-web-app:latest
+    build:
+      context: .
+    ports:
+      - '3000:3000'
