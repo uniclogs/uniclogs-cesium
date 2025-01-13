@@ -1,0 +1,19 @@
+services:
+  cesium-web-app:
+    image: oresat/cesium-web-app:latest
+    build:
+      context: .
+    ports:
+      - '7008:3000'
+
+  cesium-api:
+    image: oresat/cesium-api:latest
+    build:
+      context: .
+    ports:
+      - '7016:9000'
+    volumes:
+      - globe_data:/var/cesium-api/
+
+volumes:
+  globe_data:

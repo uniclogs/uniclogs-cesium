@@ -1,9 +1,7 @@
 services:
   cesium-web-app:
+    image: cesium-web-app:latest
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        - REST_API=http://localhost:9000
     ports:
-      - '9005:3000'
+      - '3000:3000'

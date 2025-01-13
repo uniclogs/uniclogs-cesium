@@ -1,10 +1,9 @@
 const webpack = require('webpack')
 
-const rest_api_env = JSON.stringify(process.env.REST_API)
-console.log(`[ENV]: Using Rest API at ${rest_api_env}`)
+const rest_api_env = JSON.stringify(process.env.REST_API);
+console.log(`[ENV]: Using Rest API at ${rest_api_env}`);
 
 const nextConfig = {
-  output: 'export',
   reactStrictMode: true,
   webpack: config => {
     config.plugins.push(

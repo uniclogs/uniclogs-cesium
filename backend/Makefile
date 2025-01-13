@@ -1,12 +1,10 @@
-
-
 docker:
 	python -m pip wheel . -w build --no-deps
 	docker compose build --build-arg VERSION=`grep -i 'version' pyproject.toml | cut -d'"' -f2`
 
 hub:
-	docker image tag backend-cesium-api oresat/cesium-api:latest
-	docker image tag backend-cesium-api oresat/cesium-api:`grep -i 'version' pyproject.toml | cut -d'"' -f2`
+	docker image tag cesium-api oresat/cesium-api:latest
+	docker image tag cesium-api oresat/cesium-api:`grep -i 'version' pyproject.toml | cut -d'"' -f2`
 	docker push --all-tags oresat/cesium-api
 
 tiles:
