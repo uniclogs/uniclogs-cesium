@@ -1,6 +1,7 @@
 from __future__ import annotations
 from flask import Flask, Blueprint
 from flask_cors import CORS
+from . import DEFAULT_DATA_DIR
 from .views import view_czml, view_groundstation, view_passes, view_satellite, view_tiles
 from .data import Data
 
@@ -13,12 +14,12 @@ class App(Flask):
 
     def __init__(
         self: App,
-        host: str,
-        port: int,
-        api_prefix: str,
-        data_dir: str,
         data: Data,
-        debug: bool,
+        host: str = 'localhost',
+        port: int = 9000,
+        api_prefix: str = '/',
+        data_dir: str = DEFAULT_DATA_DIR,
+        debug: bool = False,
     ):
         super().__init__(__name__)
 

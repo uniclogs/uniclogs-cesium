@@ -1,5 +1,5 @@
 // Shared constants
-export const BACKEND_REST_API = REST_API || `http://${window.location.hostname}:9123`;
+export const BACKEND_REST_API = REST_API || `https://cesium-api.uniclogs.org`;
 console.log(`[ENV]: Using Rest API at ${BACKEND_REST_API}`)
 
 // to replace the Cesium Ion logo with just a Cesium logo

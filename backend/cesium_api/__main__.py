@@ -1,8 +1,14 @@
+import logging
+
 from argparse import ArgumentParser, Namespace
 from .app import App
 from .data import Data
 from flask_cors import CORS
-from . import APP_NAME, APP_DESCRIPTION, APP_VERSION, SATELLITES, GROUND_STATIONS, DEFAULT_DATA_DIR
+from . import APP_NAME, APP_DESCRIPTION, APP_VERSION, SATELLITES, GROUND_STATIONS, DEFAULT_HOST, DEFAULT_PORT, DEFAULT_DATA_DIR, DEFAULT_API_PREFIX
+
+
+LOG = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 def parse_args() -> Namespace:
@@ -20,7 +26,7 @@ def parse_args() -> Namespace:
         "--host",
         dest="host",
         type=str,
-        default="localhost",
+        default=DEFAULT_HOST,
         help="Host to bind API server to. (default %(default)s)",
     )
     parser.add_argument(
@@ -28,7 +34,7 @@ def parse_args() -> Namespace:
         "--port",
         dest="port",
         type=int,
-        default=9000,
+        default=DEFAULT_PORT,
         help="Host to bind API server to. (default %(default)s)",
     )
     parser.add_argument(
@@ -51,7 +57,7 @@ def parse_args() -> Namespace:
         "-p",
         dest="api_prefix",
         type=str,
-        default="/",
+        default=DEFAULT_API_PREFIX,
         metavar="API Prefix",
         help="API Prefix to append to all endpoints. (default: %(default)s)",
     )
@@ -61,6 +67,9 @@ def parse_args() -> Namespace:
 def main():
     args = parse_args()
 
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
+
     if args.version:
         print(f"{APP_NAME} v{APP_VERSION}: {APP_DESCRIPTION}")
         return
@@ -68,14 +77,17 @@ def main():
     api_prefix = args.api_prefix[:-1] if args.api_prefix.endswith("/") else args.api_prefix
 
     app = App(
+        data=Data(SATELLITES, GROUND_STATIONS),
         host=args.host,
         port=args.port,
         api_prefix=api_prefix,
         data_dir=args.data_dir,
-        data=Data(SATELLITES, GROUND_STATIONS),
         debug=args.debug,
     )
-    CORS(app)
+    allowed_hosts = ['http://:localhost:3000', 'https://cesium-api.uniclogs.org']
+    CORS(app, origins=allowed_hosts)
+    LOG.info(f'Allowing CORs hosts: {allowed_hosts}')
+    
     app.run()
 
 

@@ -1,19 +1,29 @@
 import React, { useEffect } from 'react';
 import { useCesium } from 'resium';
 import { CzmlDataSource, Cartesian3 } from 'cesium';
-import { BACKEND_REST_API, CESIUM_CREDIT, HOME_LAT_DEG, HOME_LONG_DEG, HOME_ALT_M } from './Constants';
+import { BACKEND_REST_API, CESIUM_CREDIT, HOME_LAT_DEG, HOME_LONG_DEG, HOME_ALT_M, RETRY_DELAY } from './Constants';
+import { func } from 'prop-types';
+
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
 
 function DataFetcher() {
   const cesium = useCesium();
 
   function fetchCzml() {
-    fetch(`${BACKEND_REST_API}/czml`)
+    const url = `${BACKEND_REST_API}/czml`
+    console.debug(`Fetching CZML from ${url}`)
+
+    fetch(url)
       .then(response => response.json())
       .then(data => {
         if (cesium.viewer.dataSources !== undefined) {
           cesium.viewer.dataSources.removeAll(); // clear old CZMLs
           cesium.viewer.dataSources.add(CzmlDataSource.load(data));
         }
+      }).catch(res => {
+        console.error(`Failed to fetch CZML with reason: ${res}`)
       });
   }
 

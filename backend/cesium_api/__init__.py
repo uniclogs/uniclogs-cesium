@@ -9,7 +9,10 @@ APP_NAME = "cesium-api"
 APP_DESCRIPTION = "A supporting API for the CesiumJS App"
 APP_VERSION = version(__name__)
 
+DEFAULT_HOST = '0.0.0.0'
+DEFAULT_PORT = 9000
 DEFAULT_DATA_DIR = os.getenv("DATA_DIR", "../data")
+DEFAULT_API_PREFIX = '/'
 
 SATELLITES = [
     # Satellite('OreSat0', 52017, '2022-026'),
